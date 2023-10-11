@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
-    private String email = "", password = "", username = "", userId = "";
+    private String email = "", password = "", username = "", userId = "", role = "";
     private static final String TAG = "SignUpActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,16 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        //Configure spinner
+
+        String[] arraySpinner = new String[]{
+                "Administrator", "Event Organizer", "Participant"
+        };
+        Spinner s = (Spinner) binding.spinner1;
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        s.setAdapter(adapter);
         firebaseAuth = FirebaseAuth.getInstance();
         //configure progress
         ActionBar actionBar = getSupportActionBar();
@@ -61,7 +75,12 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog.setTitle("Please wait");
         progressDialog.setMessage("Creating your account");
         progressDialog.setCanceledOnTouchOutside(false);
-        binding.SignupBtn.setOnClickListener(v -> validateData());
+
+
+        binding.SignupBtn.setOnClickListener(v -> {
+            role = s.getSelectedItem().toString();
+            validateData();
+        });
     }
 
     @Override
@@ -90,6 +109,10 @@ public class SignUpActivity extends AppCompatActivity {
         else if(TextUtils.isEmpty(username)){
             binding.usernameEt.setError("Enter username");
         }
+        else if(TextUtils.isEmpty(role)){
+
+
+        }
         else{
             firebaseSignUp();
         }
@@ -111,6 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Map<String, Object> user = new HashMap<>();
                     user.put("username", username);
                     user.put("email", email);
+                    user.put("role", role);
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {

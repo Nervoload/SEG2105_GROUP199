@@ -73,11 +73,22 @@
             android:inputType="textPassword"
             android:textColorHint="#546E7A" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordTil"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        />
+
+
     <Button
         android:id="@+id/SignupBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/passwordTil"
+        android:layout_below="@+id/spinner1"
         android:text="Sign Up"
         tools:ignore="DuplicateSpeakableTextCheck" />
 </RelativeLayout>
