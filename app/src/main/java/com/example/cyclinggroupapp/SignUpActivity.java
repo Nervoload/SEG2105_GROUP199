@@ -56,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
         //Configure spinner
 
         String[] arraySpinner = new String[]{
-                "Administrator", "Event Organizer", "Participant"
+                 "Cycling club", "Participant"
         };
         Spinner s = (Spinner) binding.spinner1;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arraySpinner);
