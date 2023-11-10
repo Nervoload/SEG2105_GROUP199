@@ -1,6 +1,8 @@
 package com.example.cyclinggroupapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +16,10 @@ import java.util.ArrayList;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.MyViewHolder> {
 
+
     Context context;
     ArrayList<Event> list;
+    private OnClickListener onClickListener;
 
     public EventListAdapter(Context context, ArrayList<Event> list) {
         this.context = context;
@@ -29,23 +33,34 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.MyVi
         return new MyViewHolder(v);
     }
 
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position){
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position){
         Event event = list.get(position);
-        Log Log = null;
-        Log.d("EventAdapter", "Event Name: " + event.getEventName());
-        Log.d("EventAdapter", "Event Region: " + event.getEventRegion());
-        Log.d("EventAdapter", "Event Type: " + event.getEventType());
-        event.getEventName();
-
-        
         holder.EventName.setText(event.getEventName());
         holder.EventRegion.setText(event.getEventRegion());
         holder.EventType.setText(event.getEventType());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onClickListener != null){
+                    onClickListener.onClick(position, event);
+                }
+            }
+        });
     }
     @Override
     public int getItemCount(){
         return list.size();
     }
+
+    public void setOnClickListener(OnClickListener onClickListener){
+        this.onClickListener = onClickListener;
+    }
+
+    public interface OnClickListener {
+        void onClick(int position, Event event);
+    }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView EventName, EventRegion, EventType;
@@ -58,6 +73,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.MyVi
             EventType = itemView.findViewById(R.id.tvEventType);
 
         }
+
     }
 
 

@@ -1,6 +1,7 @@
 package com.example.cyclinggroupapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,20 @@ public class AdminEventListActivity extends Activity {
         list = new ArrayList<>();
         myAdapter = new EventListAdapter(this, list);
         recyclerView.setAdapter(myAdapter);
+
+        myAdapter.setOnClickListener(new EventListAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Event event) {
+                Intent intent = new Intent(AdminEventListActivity.this, EventDetails.class);
+                intent.putExtra(NEXT_SCREEN,event);
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -65,5 +80,9 @@ public class AdminEventListActivity extends Activity {
             }
         });
 
+        //Handling click events in listview
+
+
     }
+    public static final String NEXT_SCREEN = "EventDetails";
 }

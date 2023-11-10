@@ -1,6 +1,9 @@
 package com.example.cyclinggroupapp;
+
+import java.io.Serializable;
+
 //TO CHANGE, NEED TO ADD MORE VARIABLES
-public class Event {
+public class Event implements Serializable {
 
     String EventName, EventRegion, EventType;
 
