@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -79,6 +81,17 @@ public class AdminEventListActivity extends Activity {
 
             }
         });
+
+
+        Button createButton = findViewById(R.id.EventCreatebtn);
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Replace this with your actual logic for the button click
+                Toast.makeText(AdminEventListActivity.this, "Create button clicked!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         //Handling click events in listview
 

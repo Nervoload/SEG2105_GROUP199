@@ -16,12 +16,38 @@
         android:textColor="@android:color/black"
         android:gravity="center"/>
 
+    <TextView
+        android:id="@+id/AdminEventListDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/EventCreatebtn"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="To edit an event, click on one of the cards"
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray"
+        android:gravity="center_vertical"
+        android:layout_gravity="center"/>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@+id/AdminEventListTitle"
         android:id="@+id/eventList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:layout_below="@+id/AdminEventListDescription"
         />
+
+    <Button
+    android:id="@+id/EventCreatebtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+        android:layout_below="@id/AdminEventListTitle"
+        android:layout_centerHorizontal="true"
+
+
+
+
+    android:text="Create"/>
 
 </RelativeLayout>
