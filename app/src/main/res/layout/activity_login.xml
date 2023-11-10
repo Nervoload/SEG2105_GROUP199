@@ -24,25 +24,6 @@
         style = "@style/TextAppearance.MaterialComponents.Caption"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/usernameTil"
-        android:layout_width="match_parent"
-        android:layout_above="@+id/emailTil"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        app:passwordToggleEnabled="true">
-
-        <EditText
-            android:id="@+id/usernameEt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Username"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:textColorHint="#546E7A"
-            tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailTil"
         android:layout_width="match_parent"
         android:layout_above="@+id/passwordTil"
@@ -51,7 +32,7 @@
         <EditText
             android:id="@+id/emailET"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
             android:hint="@string/email"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
