@@ -15,6 +15,14 @@
         android:textSize="24sp"
         android:textColor="@android:color/black"
         android:gravity="center"/>
+    <Button
+        android:id="@+id/EventCreatebtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/AdminEventListTitle"
+        android:layout_centerHorizontal="true"
+
+        android:text="Create"/>
 
     <TextView
         android:id="@+id/AdminEventListDescription"
@@ -38,16 +46,6 @@
         android:layout_below="@+id/AdminEventListDescription"
         />
 
-    <Button
-    android:id="@+id/EventCreatebtn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-        android:layout_below="@id/AdminEventListTitle"
-        android:layout_centerHorizontal="true"
 
-
-
-
-    android:text="Create"/>
 
 </RelativeLayout>
