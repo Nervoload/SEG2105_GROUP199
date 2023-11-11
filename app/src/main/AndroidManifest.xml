@@ -19,6 +19,15 @@
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".TimeTrialEditInformationPage"
+            android:exported="false" />
+        <activity
+            android:name=".RoadRaceEditInformationPage"
+            android:exported="false" />
+        <activity
+            android:name=".HillClimbEditInformationPage"
+            android:exported="false" />
+        <activity
             android:name=".TimeTrialEventInformationPage"
             android:exported="false" />
         <activity
