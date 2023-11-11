@@ -106,7 +106,7 @@ public class AdminEventListActivity extends Activity {
 
     }
 
-    private void create() {startActivity(new Intent(this, ActivityCreateEventFormBinding.class));}
+    private void create() {startActivity(new Intent(this, CreateEventForm.class));}
 
     private void back() {
         startActivity(new Intent(this, ProfileActivity.class));

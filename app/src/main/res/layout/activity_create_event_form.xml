@@ -95,4 +95,10 @@
         android:text="Enter Event Information"
         android:textSize="34sp" />
 
+    <Button
+        android:id="@+id/backButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back" />
+
 </RelativeLayout>

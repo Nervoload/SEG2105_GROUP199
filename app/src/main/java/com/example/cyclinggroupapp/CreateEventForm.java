@@ -33,8 +33,10 @@ import java.util.List;
 import android.os.Bundle;
 
 public class CreateEventForm extends Activity {
+    String eventType;
+
     EditText ageEditText, paceEditText, levelEditText;
-    Button submitButton;
+    Button submitButton, backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +47,12 @@ public class CreateEventForm extends Activity {
         paceEditText = findViewById(R.id.paceEditText);
         levelEditText = findViewById(R.id.levelEditText);
         submitButton = findViewById(R.id.submitButton);
+        backButton = findViewById(R.id.backButton2);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 // Get the entered information
                 String age = ageEditText.getText().toString();
                 String pace = paceEditText.getText().toString();
@@ -57,7 +61,24 @@ public class CreateEventForm extends Activity {
                 // Display the information using Toast (you can customize this part)
                 String message = "Age: " + age + "\nPace: " + pace + "\nLevel: " + level;
                 Toast.makeText(CreateEventForm.this, message, Toast.LENGTH_SHORT).show();
+                if (eventType == null || age.equals("") || pace.equals("") || level.equals("")) {
+                    Toast.makeText(CreateEventForm.this , "choose type", Toast.LENGTH_LONG);
+                } else {
+
+                }
             }
         });
+        backButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                back();
+            }
+        });
+
+
+    }
+    private void back() {
+        startActivity(new Intent(this, ProfileActivity.class));
     }
 }
