@@ -41,7 +41,12 @@ public class HillClimbEditInformationPage extends AppCompatActivity {
             public void onClick(View view) {
                 // Handle save button click
                 // Add your save logic here
-
+                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                // set the instance variables to the values in the edit text fields
+                int height = heightEditText.getText().toString();
+                String age = ageEditText.getText().toString();
+                String level = levelEditText.getText().toString();
+                String pace = paceEditText.getText().toString();
                 
             }
         });

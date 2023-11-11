@@ -82,7 +82,7 @@ public class AdminEventListActivity extends Activity {
                     event.EventName = (String) dataSnapshot.get("EventName");
                     event.EventRegion = (String) dataSnapshot.get("EventRegion");
                     event.EventType = (String) dataSnapshot.get("EventType");
-                    dataSnapshot.getId();
+                    event.EventId = (String) dataSnapshot.getId();
                     list.add(event);
 
                 }

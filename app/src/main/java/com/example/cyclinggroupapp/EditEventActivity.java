@@ -7,11 +7,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class EditEventActivity extends AppCompatActivity {
 
@@ -45,6 +47,7 @@ public class EditEventActivity extends AppCompatActivity {
         editEventType.setHint(eventType);
 
         findViewById(R.id.cancelEdit).setOnClickListener(view ->cancelEditPage());
+        findViewById(R.id.deleteEvent).setOnClickListener(view ->deleteEventDB());
         findViewById(R.id.saveEventButton).setOnClickListener(view -> saveEventChanges());
     }
 
@@ -67,17 +70,17 @@ public class EditEventActivity extends AppCompatActivity {
     }
 
     private void saveEventChanges() {
-        String newEventName = editEventName.getText().toString().trim();
-        String newEventRegion = editEventRegion.getText().toString().trim();
-        String newEventType = editEventType.getText().toString().trim();
+        String newEventName = editEventName.getText().toString();
+        String newEventRegion = editEventRegion.getText().toString();
+        String newEventType = editEventType.getText().toString();
 
-        if (newEventName == null){
+        if (newEventName == null || newEventName == ""){
             newEventName = eventName;
         }
-        if (newEventRegion == null){
+        if (newEventRegion == null || newEventRegion == ""){
             newEventRegion = eventRegion;
         }
-        if (newEventType == null){
+        if (newEventType == null || newEventType == ""){
             newEventType = eventType;
         }
 
@@ -86,22 +89,33 @@ public class EditEventActivity extends AppCompatActivity {
     }
 
     private void updateEventInFirestore(String eventName, String eventRegion, String eventType) {
-
+        Map<String, Object> event = new HashMap<>();
+        event.put("EventName", eventName);
+        event.put("EventRegion", eventRegion);
+        event.put("EventType", eventType);
         db.document(editEventId)
-                .update(
-                        "EventName", eventName,
-                        "EventRegion", eventRegion,
-                        "EventType", eventType
-                )
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(EditEventActivity.this, "Event updated successfully", Toast.LENGTH_SHORT).show();
-                    // Optionally, navigate back to the previous Activity or perform other actions
+                .update(event)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    public void onSuccess(Void unused) {
+                        startActivity(new Intent(EditEventActivity.this, AdminEventListActivity.class));
+                        finish();
+                    }
                 })
                 .addOnFailureListener(e -> Toast.makeText(EditEventActivity.this, "Error updating event", Toast.LENGTH_SHORT).show());
     }
 
+    private void deleteEventDB(){
+        db.document(editEventId).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    public void onSuccess(Void unused) {
+                        startActivity(new Intent(EditEventActivity.this, AdminEventListActivity.class));
+                        finish();
+                    }
+                })
+                .addOnFailureListener(e -> Toast.makeText(EditEventActivity.this, "Error Deleting Event", Toast.LENGTH_SHORT).show());
+    }
     private void cancelEditPage() {
-        startActivity(new Intent(this, AdminEventListActivity.class));
+        startActivity(new Intent(this, AdminEventListActivity.class)); finish();
     }
 
 
