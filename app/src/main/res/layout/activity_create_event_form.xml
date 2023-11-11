@@ -26,26 +26,26 @@
     <EditText
         android:id="@+id/ageEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your age"
+        android:layout_height="90dp"
         android:layout_below="@id/titleTextView"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:hint="Enter your age" />
 
     <EditText
         android:id="@+id/paceEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Pace"
+        android:layout_height="97dp"
         android:layout_below="@id/ageEditText"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:hint="Enter Pace" />
 
     <EditText
         android:id="@+id/levelEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Level"
+        android:layout_height="70dp"
         android:layout_below="@id/paceEditText"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:hint="Enter Level" />
 
     <LinearLayout
         android:id="@+id/buttonLayout"

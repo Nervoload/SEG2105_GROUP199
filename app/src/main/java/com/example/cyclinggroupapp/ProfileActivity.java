@@ -3,6 +3,7 @@ package com.example.cyclinggroupapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -28,6 +29,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
+    private String role;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +52,11 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         binding.nextButton.setOnClickListener(view -> {
-            startActivity(new Intent(ProfileActivity.this, AdminEventListActivity.class));
+            if (role.equals("Admin")) {
+                startActivity(new Intent(ProfileActivity.this, AdminEventListActivity.class));
+            } else {
+                Toast.makeText(ProfileActivity.this, "Not Implemented yet", Toast.LENGTH_LONG).show();
+            }
         });
 
 
@@ -84,7 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
                         if (document.exists()) {
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                             String username = (String) document.get("username");
-                            String role = (String) document.get("role");
+                            role = (String) document.get("role");
                             binding.emailTv.setText(username);
                             binding.RoleTv.setText(role);
 

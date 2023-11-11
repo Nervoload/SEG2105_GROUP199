@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cyclinggroupapp.databinding.ActivityAdminEventListBinding;
+import com.example.cyclinggroupapp.databinding.ActivityCreateEventFormBinding;
 import com.example.cyclinggroupapp.databinding.ActivityLoginBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,9 +53,9 @@ public class AdminEventListActivity extends Activity {
         myAdapter.setOnClickListener(new EventListAdapter.OnClickListener() {
             @Override
             public void onClick(int position, Event event) {
-                Intent intent = new Intent(AdminEventListActivity.this, EventDetails.class);
-                intent.putExtra(NEXT_SCREEN,event);
-                startActivity(intent);
+                //Intent intent = new Intent(AdminEventListActivity.this, EventDetails.class);
+                //intent.putExtra(NEXT_SCREEN,event);
+                //startActivity(intent);
             }
         });
 
@@ -88,7 +89,7 @@ public class AdminEventListActivity extends Activity {
             @Override
             public void onClick(View view) {
                 // Replace this with your actual logic for the button click
-                Toast.makeText(AdminEventListActivity.this, "Create button clicked!", Toast.LENGTH_SHORT).show();
+                create();
             }
 
 
@@ -104,6 +105,8 @@ public class AdminEventListActivity extends Activity {
         });
 
     }
+
+    private void create() {startActivity(new Intent(this, ActivityCreateEventFormBinding.class));}
 
     private void back() {
         startActivity(new Intent(this, ProfileActivity.class));
