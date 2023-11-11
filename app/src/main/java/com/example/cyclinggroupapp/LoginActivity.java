@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         checkUser();
-        //if have account click to go to signin
+        //if do not have account click to go to signin
 
         binding.haveAccount.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignUpActivity.class)));
         binding.LoginBtn.setOnClickListener(v -> validateData());
