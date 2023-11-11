@@ -16,8 +16,8 @@ public class TimeTrialEditInformationPage extends AppCompatActivity {
         setContentView(R.layout.activity_time_trial_edit_information_page);
 
         timeEditText = findViewById(R.id.timeEditText);
-        ageEditText = findViewById(R.id.ageEditText);
-        levelEditText = findViewById(R.id.levelEditText);
+        ageEditText = findViewById(R.id.eventNameEditText);
+        levelEditText = findViewById(R.id.regionEditText);
         paceEditText = findViewById(R.id.paceEditText);
 
         Button backButton = findViewById(R.id.backButton);

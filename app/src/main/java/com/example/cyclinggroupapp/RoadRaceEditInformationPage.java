@@ -18,8 +18,8 @@ public class RoadRaceEditInformationPage extends AppCompatActivity {
 
         distanceEditText = findViewById(R.id.distanceEditText);
         groupNumberEditText = findViewById(R.id.groupNumberEditText);
-        ageEditText = findViewById(R.id.ageEditText);
-        levelEditText = findViewById(R.id.levelEditText);
+        ageEditText = findViewById(R.id.eventNameEditText);
+        levelEditText = findViewById(R.id.regionEditText);
         paceEditText = findViewById(R.id.paceEditText);
 
         Button backButton = findViewById(R.id.backButton);

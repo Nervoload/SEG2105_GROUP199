@@ -65,6 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
         binding.nextButton.setOnClickListener(view -> {
             if (role.equals("Admin")) {
                 startActivity(new Intent(ProfileActivity.this, AdminEventListActivity.class));
+                finish();
             } else {
                 Toast.makeText(ProfileActivity.this, "Not Implemented yet", Toast.LENGTH_LONG).show();
             }

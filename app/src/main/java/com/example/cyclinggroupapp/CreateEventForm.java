@@ -4,38 +4,24 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cyclinggroupapp.databinding.ActivityAdminEventListBinding;
-import com.example.cyclinggroupapp.databinding.ActivityCreateEventFormBinding;
-import com.example.cyclinggroupapp.databinding.ActivityLoginBinding;
-import com.example.cyclinggroupapp.databinding.ActivitySignUpBinding;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
-import java.util.List;
-import android.os.Bundle;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateEventForm extends Activity {
     String eventType;
 
-    EditText ageEditText, paceEditText, levelEditText;
+    EditText nameET, regionET;
+    private FirebaseFirestore fstore;
     Button submitButton, backButton, ttBtn, rrBtn, hcBtn;
 
     @Override
@@ -43,15 +29,15 @@ public class CreateEventForm extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event_form);
 
-        ageEditText = findViewById(R.id.ageEditText);
-        paceEditText = findViewById(R.id.paceEditText);
-        levelEditText = findViewById(R.id.levelEditText);
+        nameET = findViewById(R.id.eventNameEditText);
+        regionET = findViewById(R.id.regionEditText);
         submitButton = findViewById(R.id.submitButton);
         backButton = findViewById(R.id.backButton2);
         rrBtn = findViewById(R.id.RoadRaceBtn);
         ttBtn = findViewById(R.id.TimeTrialBtn);
         hcBtn = findViewById(R.id.HillClimbBtn);
 
+        /*
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,15 +49,37 @@ public class CreateEventForm extends Activity {
 
 
                 if (eventType == null || age.equals("") || pace.equals("") || level.equals("")) {
-                    Toast.makeText(CreateEventForm.this , "choose type", Toast.LENGTH_LONG);
+                    Toast.makeText(CreateEventForm.this, "choose type", Toast.LENGTH_LONG);
                 } else {
+                    Intent i = new Intent();
                     if (eventType.equals("Time-Trail")) {
-                        startActivity(new Intent(CreateEventForm.this, TimeTrialEventInformationPage.class));
+                        i = new Intent(CreateEventForm.this, TimeTrialEventInformationPage.class);
                     } else if (eventType.equals("Hill-Climb")) {
-                        startActivity(new Intent(CreateEventForm.this, HillClimbEditInformationPage.class));
+                        i = new Intent(CreateEventForm.this, HillClimbEditInformationPage.class);
                     } else if (eventType.equals("Road-Race")) {
-                        startActivity(new Intent(CreateEventForm.this, RoadRaceEditInformationPage.class));
+                        i = new Intent(CreateEventForm.this, RoadRaceEditInformationPage.class);
                     }
+
+                    i.putExtra("age", age);
+                    i.putExtra("pace", pace);
+                    i.putExtra("level", level);
+                    i.putExtra("type", eventType);
+
+                    startActivity(i);
+                }
+            }
+        });
+         */
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = nameET.getText().toString();
+                String region = regionET.getText().toString();
+                if (eventType == null || name.equals("") || region.equals("")) {
+                    Toast.makeText(CreateEventForm.this, "choose type", Toast.LENGTH_LONG);
+                } else {
+                    updatedDB(name, region, eventType);
                 }
             }
         });
@@ -87,7 +95,7 @@ public class CreateEventForm extends Activity {
             @Override
             public void onClick(View view) {
                 eventType = "Road-Race";
-                Toast.makeText(CreateEventForm.this , "Road Race", Toast.LENGTH_LONG);
+                Toast.makeText(CreateEventForm.this, "Road Race", Toast.LENGTH_LONG);
             }
         });
 
@@ -95,7 +103,7 @@ public class CreateEventForm extends Activity {
             @Override
             public void onClick(View view) {
                 eventType = "Time-Trail";
-                Toast.makeText(CreateEventForm.this , "Time Trail", Toast.LENGTH_LONG);
+                Toast.makeText(CreateEventForm.this, "Time Trail", Toast.LENGTH_LONG);
             }
         });
 
@@ -103,12 +111,40 @@ public class CreateEventForm extends Activity {
             @Override
             public void onClick(View view) {
                 eventType = "Hill-Climb";
-                Toast.makeText(CreateEventForm.this , "Hill Climb", Toast.LENGTH_LONG);
+                Toast.makeText(CreateEventForm.this, "Hill Climb", Toast.LENGTH_LONG);
             }
         });
 
     }
+
     private void back() {
         startActivity(new Intent(this, ProfileActivity.class));
+    }
+
+    private void updatedDB(String name, String region, String type) {
+        fstore = FirebaseFirestore.getInstance();
+
+        long time = System.currentTimeMillis();
+        String id = time + "";
+
+        Map<String, Object> event = new HashMap<>();
+        event.put("name", name);
+        event.put("region", region);
+        event.put("type", type);
+
+        fstore.collection("Events").document(id).set(event).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                startActivity(new Intent(this, ));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+        Toast.makeText(this, "Time entered: " + time + " seconds", Toast.LENGTH_SHORT).show();
+
     }
 }
