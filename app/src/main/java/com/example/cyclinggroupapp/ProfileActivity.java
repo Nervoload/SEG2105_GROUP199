@@ -18,7 +18,17 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +37,6 @@ public class ProfileActivity extends AppCompatActivity {
     private ActivityProfileBinding binding;
 
     public static String username;
-    public static String role;
 
     private FirebaseAuth firebaseAuth;
 
@@ -92,9 +101,10 @@ public class ProfileActivity extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                            String username = (String) document.get("username");
-                            String role = (String) document.get("role");
+                            username = (String) document.get("username");
+                            role = (String) document.get("role");
                             binding.emailTv.setText(username);
+                            binding.RoleTv.setText(role);
 
                         } else {
                             Log.d(TAG, "No such document");

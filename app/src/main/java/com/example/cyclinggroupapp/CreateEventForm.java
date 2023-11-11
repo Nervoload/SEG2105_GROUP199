@@ -36,7 +36,7 @@ public class CreateEventForm extends Activity {
     String eventType;
 
     EditText ageEditText, paceEditText, levelEditText;
-    Button submitButton, backButton;
+    Button submitButton, backButton, ttBtn, rrBtn, hcBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,9 @@ public class CreateEventForm extends Activity {
         levelEditText = findViewById(R.id.levelEditText);
         submitButton = findViewById(R.id.submitButton);
         backButton = findViewById(R.id.backButton2);
+        rrBtn = findViewById(R.id.RoadRaceBtn);
+        ttBtn = findViewById(R.id.TimeTrialBtn);
+        hcBtn = findViewById(R.id.HillClimbBtn);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,13 +61,17 @@ public class CreateEventForm extends Activity {
                 String pace = paceEditText.getText().toString();
                 String level = levelEditText.getText().toString();
 
-                // Display the information using Toast (you can customize this part)
-                String message = "Age: " + age + "\nPace: " + pace + "\nLevel: " + level;
-                Toast.makeText(CreateEventForm.this, message, Toast.LENGTH_SHORT).show();
+
                 if (eventType == null || age.equals("") || pace.equals("") || level.equals("")) {
                     Toast.makeText(CreateEventForm.this , "choose type", Toast.LENGTH_LONG);
                 } else {
-
+                    if (eventType.equals("Time-Trail")) {
+                        startActivity(new Intent(CreateEventForm.this, TimeTrialEventInformationPage.class));
+                    } else if (eventType.equals("Hill-Climb")) {
+                        startActivity(new Intent(CreateEventForm.this, HillClimbEditInformationPage.class));
+                    } else if (eventType.equals("Road-Race")) {
+                        startActivity(new Intent(CreateEventForm.this, RoadRaceEditInformationPage.class));
+                    }
                 }
             }
         });
@@ -76,6 +83,26 @@ public class CreateEventForm extends Activity {
             }
         });
 
+        rrBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eventType = "Road-Race";
+            }
+        });
+
+        ttBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eventType = "Time-Trail";
+            }
+        });
+
+        hcBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eventType = "Hill-Climb";
+            }
+        });
 
     }
     private void back() {
