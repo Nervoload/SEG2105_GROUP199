@@ -87,6 +87,7 @@ public class CreateEventForm extends Activity {
             @Override
             public void onClick(View view) {
                 eventType = "Road-Race";
+                Toast.makeText(CreateEventForm.this , "Road Race", Toast.LENGTH_LONG);
             }
         });
 
@@ -94,6 +95,7 @@ public class CreateEventForm extends Activity {
             @Override
             public void onClick(View view) {
                 eventType = "Time-Trail";
+                Toast.makeText(CreateEventForm.this , "Time Trail", Toast.LENGTH_LONG);
             }
         });
 
@@ -101,6 +103,7 @@ public class CreateEventForm extends Activity {
             @Override
             public void onClick(View view) {
                 eventType = "Hill-Climb";
+                Toast.makeText(CreateEventForm.this , "Hill Climb", Toast.LENGTH_LONG);
             }
         });
 
