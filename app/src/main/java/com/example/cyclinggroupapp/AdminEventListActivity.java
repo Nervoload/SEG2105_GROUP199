@@ -114,10 +114,10 @@ public class AdminEventListActivity extends Activity {
 
     }
 
-    private void create() {startActivity(new Intent(this, CreateEventForm.class));}
+    private void create() {startActivity(new Intent(this, CreateEventForm.class)); finish();}
 
     private void back() {
-        startActivity(new Intent(this, ProfileActivity.class));
+        startActivity(new Intent(this, ProfileActivity.class)); finish();
     }
     public static final String NEXT_SCREEN = "EventDetails";
 }

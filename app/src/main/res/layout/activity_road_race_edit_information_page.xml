@@ -44,7 +44,7 @@
         android:padding="8dp"/>
 
     <EditText
-        android:id="@+id/ageEditText"
+        android:id="@+id/eventNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Your Age"
@@ -53,11 +53,11 @@
         android:padding="8dp"/>
 
     <EditText
-        android:id="@+id/levelEditText"
+        android:id="@+id/regionEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Your Level"
-        android:layout_below="@id/ageEditText"
+        android:layout_below="@id/eventNameEditText"
         android:layout_marginTop="16dp"
         android:padding="8dp"/>
 
@@ -66,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Your Pace"
-        android:layout_below="@id/levelEditText"
+        android:layout_below="@id/regionEditText"
         android:layout_marginTop="16dp"
         android:padding="8dp"/>
 

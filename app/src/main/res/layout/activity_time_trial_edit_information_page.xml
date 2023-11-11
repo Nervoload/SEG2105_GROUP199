@@ -34,7 +34,7 @@
         android:hint="Enter Time (in seconds) Taken"/>
 
     <EditText
-        android:id="@+id/ageEditText"
+        android:id="@+id/eventNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/timeEditText"
@@ -42,10 +42,10 @@
         android:hint="Enter Your Age"/>
 
     <EditText
-        android:id="@+id/levelEditText"
+        android:id="@+id/regionEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ageEditText"
+        android:layout_below="@id/eventNameEditText"
         android:layout_marginTop="16dp"
         android:hint="Enter Your Level"/>
 
@@ -53,7 +53,7 @@
         android:id="@+id/paceEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/levelEditText"
+        android:layout_below="@id/regionEditText"
         android:layout_marginTop="16dp"
         android:hint="Enter Your Pace"/>
 
