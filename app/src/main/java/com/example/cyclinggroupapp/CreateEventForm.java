@@ -128,23 +128,24 @@ public class CreateEventForm extends Activity {
         String id = time + "";
 
         Map<String, Object> event = new HashMap<>();
-        event.put("name", name);
-        event.put("region", region);
-        event.put("type", type);
+        event.put("EventName", name);
+        event.put("EventRegion", region);
+        event.put("EventType", type);
 
         fstore.collection("Events").document(id).set(event).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                startActivity(new Intent(this, ));
+                startActivity(new Intent(CreateEventForm.this, AdminEventListActivity.class));
+                finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
+                Toast.makeText(CreateEventForm.this, "did not work", Toast.LENGTH_SHORT).show();
             }
         });
 
-        Toast.makeText(this, "Time entered: " + time + " seconds", Toast.LENGTH_SHORT).show();
+
 
     }
 }
