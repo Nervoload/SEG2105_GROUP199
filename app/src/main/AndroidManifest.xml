@@ -54,6 +54,9 @@
         <activity
             android:name=".LandingPageActivity"
             android:exported="false"/>
+        <activity
+            android:name=".EditEventActivity"
+            android:exported="false"/>
 
         <activity
             android:name=".LoginActivity"

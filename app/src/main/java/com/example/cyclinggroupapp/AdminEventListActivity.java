@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +25,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +38,7 @@ import java.util.List;
 public class AdminEventListActivity extends Activity {
 
     RecyclerView recyclerView;
-    DatabaseReference database;
+    CollectionReference database;
     EventListAdapter myAdapter;
     ArrayList<Event> list;
 
@@ -42,7 +48,7 @@ public class AdminEventListActivity extends Activity {
         setContentView(R.layout.activity_admin_event_list);
 
         recyclerView = findViewById(R.id.eventList);
-        database = FirebaseDatabase.getInstance().getReference("Events");
+        database = FirebaseFirestore.getInstance().collection("Events");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -53,32 +59,34 @@ public class AdminEventListActivity extends Activity {
         myAdapter.setOnClickListener(new EventListAdapter.OnClickListener() {
             @Override
             public void onClick(int position, Event event) {
-                //Intent intent = new Intent(AdminEventListActivity.this, EventDetails.class);
-                //intent.putExtra(NEXT_SCREEN,event);
-                //startActivity(intent);
+
+                Intent intent = new Intent(AdminEventListActivity.this, EditEventActivity.class);
+                intent.putExtra(NEXT_SCREEN,event);
+                //intent.putExtra("EVENT_ID", )
+                intent.putExtra("EVENT_NAME", event.EventName);
+                intent.putExtra("EVENT_REGION", event.EventRegion);
+                intent.putExtra("EVENT_TYPE", event.EventType);
+                intent.putExtra("EVENT_ID",event.EventId);
+                startActivity(intent);
             }
         });
 
 
+        database.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
-
-
-        database.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                for(DocumentSnapshot dataSnapshot: value.getDocuments()){
 
-                    Event event = dataSnapshot.getValue(Event.class);
+                    Event event = new Event();
+                    event.EventName = (String) dataSnapshot.get("EventName");
+                    event.EventRegion = (String) dataSnapshot.get("EventRegion");
+                    event.EventType = (String) dataSnapshot.get("EventType");
+                    dataSnapshot.getId();
                     list.add(event);
-
 
                 }
                 myAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });

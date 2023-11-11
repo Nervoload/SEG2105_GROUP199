@@ -1,8 +1,11 @@
 package com.example.cyclinggroupapp;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,6 +76,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.MyVi
             EventType = itemView.findViewById(R.id.tvEventType);
 
         }
+
+
 
     }
 

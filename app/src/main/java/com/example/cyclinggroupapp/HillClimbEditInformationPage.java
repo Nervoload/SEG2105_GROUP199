@@ -41,6 +41,8 @@ public class HillClimbEditInformationPage extends AppCompatActivity {
             public void onClick(View view) {
                 // Handle save button click
                 // Add your save logic here
+
+                
             }
         });
 

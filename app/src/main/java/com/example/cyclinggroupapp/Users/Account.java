@@ -32,10 +32,10 @@ public class Account {
         this.email = email;
     }
 
-    public void verifyEmail(String email1, String email2){
+    public void verifyEmail(String email, String storedEmail){
 
-        if (email1.equals(email2)){
-            this.email = email1;
+        if (email.equals(storedEmail)){
+            this.email = email;
         }
         else{
             System.out.println("Emails do not match!");
