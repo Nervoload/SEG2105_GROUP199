@@ -50,8 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="CYCLE"
-            android:onClick="logIn"/>
+            android:text="CYCLE"/>
         <Button
             android:id="@+id/logoutBtn"
             android:layout_width="wrap_content"
@@ -60,6 +59,4 @@
             android:text="Log Out" />
     </LinearLayout>
 
-
->>>>>>> Stashed changes
 </LinearLayout>

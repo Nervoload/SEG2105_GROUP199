@@ -3,6 +3,8 @@ package com.example.cyclinggroupapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -26,12 +28,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     private ActivityProfileBinding binding;
 
-    public static String username;
-    public static String role;
+    public String username;
+    public String role;
 
     private FirebaseAuth firebaseAuth;
 
-    private String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
             if (role.equals("Admin")) {
                 startActivity(new Intent(ProfileActivity.this, AdminEventListActivity.class));
             } else {
-                Toast.makeText(ProfileActivity.this, "Not Implemented yet", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(ProfileActivity.this, LandingPageActivity.class));
             }
         });
 
@@ -92,9 +93,10 @@ public class ProfileActivity extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                            String username = (String) document.get("username");
-                            String role = (String) document.get("role");
+                            username = (String) document.get("username");
+                            role = (String) document.get("role");
                             binding.emailTv.setText(username);
+                            binding.RoleTv.setText(role);
 
                         } else {
                             Log.d(TAG, "No such document");
@@ -109,34 +111,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         }
     }
-    public void logIn(View view) {
-        // Assume authentication is done and you have the user's ID
-        String userId = username; // get the user's ID from authentication
 
-        // Get user's role from Firestore
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(userId).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful() && task.getResult() != null) {
-                String role = task.getResult().getString("role");
-
-                // Direct user based on their role
-                if ("admin".equals(role)) {
-                    // Open Admin Activity
-                    Intent adminIntent = new Intent(this, AdminEventListActivity.class);
-                    startActivity(adminIntent);
-                } else {
-                    // Open Landing Page for other roles
-                    Intent landingIntent = new Intent(this, LandingPageActivity.class);
-                    startActivity(landingIntent);
-                }
-
-                finish(); // Close the login activity
-            } else {
-                // Handle the error
-            }
-        });
-
-    }
     public void logOff(View view) {
         // Log out from Firebase Auth
         FirebaseAuth.getInstance().signOut();
