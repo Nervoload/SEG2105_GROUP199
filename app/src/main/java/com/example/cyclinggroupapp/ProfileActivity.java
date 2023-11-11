@@ -48,6 +48,11 @@ public class ProfileActivity extends AppCompatActivity {
             checkUser();
         });
 
+        binding.nextButton.setOnClickListener(view -> {
+            startActivity(new Intent(ProfileActivity.this, AdminEventListActivity.class));
+        });
+
+
 
     }
 
@@ -83,7 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
                             binding.emailTv.setText(username);
                             binding.RoleTv.setText(role);
 
-                            startActivity(new Intent(ProfileActivity.this, AdminEventListActivity.class)); // TO CHANGE, NEED TO PASS TO A PROFILEHANDLER TO DETERMINE WHICH SCREEN THE USER SEES FIRST
+                            //startActivity(new Intent(ProfileActivity.this, AdminEventListActivity.class)); // TO CHANGE, NEED TO PASS TO A PROFILEHANDLER TO DETERMINE WHICH SCREEN THE USER SEES FIRST
 
                         } else {
                             Log.d(TAG, "No such document");

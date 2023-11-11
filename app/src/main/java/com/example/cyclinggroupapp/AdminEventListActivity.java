@@ -90,12 +90,23 @@ public class AdminEventListActivity extends Activity {
                 // Replace this with your actual logic for the button click
                 Toast.makeText(AdminEventListActivity.this, "Create button clicked!", Toast.LENGTH_SHORT).show();
             }
+
+
         });
 
+        Button backButton = findViewById(R.id.BackToProfile);
+        backButton.setOnClickListener(new View.OnClickListener() {
 
-        //Handling click events in listview
+            @Override
+            public void onClick(View view) {
+                back();
+            }
+        });
 
+    }
 
+    private void back() {
+        startActivity(new Intent(this, ProfileActivity.class));
     }
     public static final String NEXT_SCREEN = "EventDetails";
 }
