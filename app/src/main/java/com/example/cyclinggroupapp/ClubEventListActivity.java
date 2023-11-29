@@ -128,6 +128,15 @@ public class ClubEventListActivity extends Activity {
 
         });
 
+        Button CreateEditClubButton = findViewById(R.id.CreateEditClubInfoBtn);
+
+        CreateEditClubButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+            }
+        });
+
     }
 
     private void create() {startActivity(new Intent(ClubEventListActivity.this, CreateEventForm.class)); finish();}
