@@ -168,12 +168,6 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
             }
         });
 
-
-
-
-
-
-
     }
 
     @Override

@@ -138,4 +138,10 @@ public class ProfileActivity extends AppCompatActivity {
         finish(); // Close the current activity
     }
 
+    public void editProfile(View view) {
+        Intent intent = new Intent(this, ProfileInfo.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

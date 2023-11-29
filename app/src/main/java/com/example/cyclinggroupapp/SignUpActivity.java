@@ -135,6 +135,11 @@ public class SignUpActivity extends AppCompatActivity {
                     user.put("username", username);
                     user.put("email", email);
                     user.put("role", role);
+                    Map<String, Object> profileInfo = new HashMap<>();
+                    profileInfo.put("Instagram", "");
+                    profileInfo.put("Phone", "");
+                    profileInfo.put("Name", "");
+                    user.put("Profile", profileInfo);
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
