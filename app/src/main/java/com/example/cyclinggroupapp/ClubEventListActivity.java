@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,6 +56,21 @@ public class ClubEventListActivity extends Activity {
         myAdapter = new EventListAdapter(this, list);
         recyclerView.setAdapter(myAdapter);
 
+        ImageView rightIcon = findViewById(R.id.right_icon);
+        rightIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                View tools = findViewById(R.id.tools);
+
+                if (view.getId() == R.id.right_icon) {
+
+                    // Alternatively, if you're toggling visibility, use:
+                    tools.setVisibility(tools.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                }
+            }
+        });
+
         //To query the username of the current user
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String document = firebaseAuth.getCurrentUser().getUid();
@@ -76,16 +92,17 @@ public class ClubEventListActivity extends Activity {
                             @Override
                             public void onClick(int position, Event event) {
 
-                                Intent intent = new Intent(ClubEventListActivity.this, EditEventActivity.class);
-                                intent.putExtra(NEXT_SCREEN,event);
-                                //intent.putExtra("EVENT_ID", )
-                                intent.putExtra("EVENT_NAME", event.EventName);
-                                intent.putExtra("EVENT_REGION", event.EventRegion);
-                                intent.putExtra("EVENT_TYPE", event.EventType);
-                                intent.putExtra("EVENT_ID",event.EventId);
-                                startActivity(intent);
-                            }
-                        });
+                Intent intent = new Intent(ClubEventListActivity.this, EditEventActivity.class);
+                intent.putExtra(NEXT_SCREEN,event);
+                intent.putExtra("ACTIVITY_ORIGIN", "Club");
+                //intent.putExtra("EVENT_ID", )
+                intent.putExtra("EVENT_NAME", event.EventName);
+                intent.putExtra("EVENT_REGION", event.EventRegion);
+                intent.putExtra("EVENT_TYPE", event.EventType);
+                intent.putExtra("EVENT_ID",event.EventId);
+                startActivity(intent);
+            }
+        });
 
                         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
@@ -139,10 +156,28 @@ public class ClubEventListActivity extends Activity {
 
     }
 
-    private void create() {startActivity(new Intent(ClubEventListActivity.this, CreateEventForm.class)); finish();}
-
+    private void create() {
+        Intent intent = new Intent(ClubEventListActivity.this, CreateEventForm.class);
+        intent.putExtra("ACTIVITY_ORIGIN", "Club");
+        startActivity(intent);
+        finish();
+    }
     private void back() {
-        startActivity(new Intent(this, ProfileActivity.class)); finish();
+        Intent intent = new Intent(ClubEventListActivity.this, CreateEventForm.class);
+        intent.putExtra("ACTIVITY_ORIGIN", "Club");
+        startActivity(intent);
+        finish();
     }
     public static final String NEXT_SCREEN = "EventDetails";
+
+    public void logOff(View view) {
+        // Log out from Firebase Auth
+        FirebaseAuth.getInstance().signOut();
+
+        // Redirect to the Login Screen
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish(); // Close the current activity
+    }
+
 }

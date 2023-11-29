@@ -14,8 +14,8 @@
 
         <include
             layout="@layout/togglemenu"
+            android:id="@+id/tools"
             android:visibility="gone"
-
             />
 
         <LinearLayout

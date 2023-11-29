@@ -20,7 +20,7 @@ public class EditEventActivity extends AppCompatActivity {
     private EditText editEventName, editEventRegion, editEventType;
     private CollectionReference db;
     private String editEventId; // To store the original event name
-    private String eventName,eventRegion,eventType;
+    private String eventName,eventRegion,eventType,activityOrigin;
 
 
     @Override
@@ -29,6 +29,10 @@ public class EditEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_event);
 
         db = FirebaseFirestore.getInstance().collection("Events");
+
+        //setting origin of activity starting
+
+        activityOrigin = getIntent().getStringExtra("ACTIVITY_ORIGIN");
 
 
         editEventName = findViewById(R.id.editEventName);
@@ -93,6 +97,18 @@ public class EditEventActivity extends AppCompatActivity {
         event.put("EventName", eventName);
         event.put("EventRegion", eventRegion);
         event.put("EventType", eventType);
+
+        if (activityOrigin.equals("Club")){
+            db.document(editEventId)
+                    .update(event)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        public void onSuccess(Void unused) {
+                            startActivity(new Intent(EditEventActivity.this, ClubEventListActivity.class));
+                            finish();
+                        }
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(EditEventActivity.this, "Error updating event", Toast.LENGTH_SHORT).show());
+        } else {
         db.document(editEventId)
                 .update(event)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -102,9 +118,21 @@ public class EditEventActivity extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> Toast.makeText(EditEventActivity.this, "Error updating event", Toast.LENGTH_SHORT).show());
+        }
     }
 
     private void deleteEventDB(){
+        if (activityOrigin.equals("Club")){
+            db.document(editEventId).delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        public void onSuccess(Void unused) {
+                            startActivity(new Intent(EditEventActivity.this, ClubEventListActivity.class));
+                            finish();
+                        }
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(EditEventActivity.this, "Error Deleting Event", Toast.LENGTH_SHORT).show());
+
+        }else{
         db.document(editEventId).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     public void onSuccess(Void unused) {
@@ -113,9 +141,15 @@ public class EditEventActivity extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> Toast.makeText(EditEventActivity.this, "Error Deleting Event", Toast.LENGTH_SHORT).show());
+        }
     }
     private void cancelEditPage() {
-        startActivity(new Intent(this, AdminEventListActivity.class)); finish();
+        if (activityOrigin.equals("Club")) {
+            startActivity(new Intent(this, ClubEventListActivity.class));
+        } else {
+            startActivity(new Intent(this, AdminEventListActivity.class));
+        }
+        finish();
     }
 
 
