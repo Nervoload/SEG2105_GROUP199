@@ -13,10 +13,10 @@
         <include layout="@layout/toolbar"></include>
 
         <include
-        layout="@layout/togglemenu"
-        android:visibility="gone"
+            layout="@layout/togglemenu"
+            android:visibility="gone"
 
-        ></include>
+            />
 
         <LinearLayout
             android:id="@+id/Feed"
