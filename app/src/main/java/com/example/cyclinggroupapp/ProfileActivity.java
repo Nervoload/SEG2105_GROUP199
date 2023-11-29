@@ -68,12 +68,16 @@ public class ProfileActivity extends AppCompatActivity {
             if (role.equals("Admin")) {
                 startActivity(new Intent(ProfileActivity.this, AdminEventListActivity.class));
                 finish();
+            }
+            if (role.equals("Cycling club")) {
+                startActivity(new Intent(ProfileActivity.this, ClubEventListActivity.class));
+                finish();
             } else {
                 startActivity(new Intent(ProfileActivity.this, LandingPageActivity.class));
             }
         });
 
-
+        //For Club Owners
 
     }
 
@@ -106,6 +110,7 @@ public class ProfileActivity extends AppCompatActivity {
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                             username = (String) document.get("username");
                             role = (String) document.get("role");
+
                             binding.emailTv.setText(username);
                             binding.RoleTv.setText(role);
 
