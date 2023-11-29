@@ -103,6 +103,16 @@ public class AdminEventListActivity extends Activity {
 
         });
 
+        Button createType = findViewById(R.id.createEventType);
+        createType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AdminEventListActivity.this, CreateTypeActivity.class)); finish();
+            }
+
+
+        });
+
         Button backButton = findViewById(R.id.BackToProfile);
         backButton.setOnClickListener(new View.OnClickListener() {
 
