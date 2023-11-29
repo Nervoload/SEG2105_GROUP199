@@ -106,18 +106,6 @@ public class ClubEventListActivity extends Activity {
                             }
                         });
 
-                        Button createButton = findViewById(R.id.ClubEventCreateBtn);
-                        createButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // Replace this with your actual logic for the button click
-                                create();
-                            }
-
-
-                        });
-
-
                     } else {
                         Log.d(TAG, "No such document");
                     }
@@ -128,23 +116,21 @@ public class ClubEventListActivity extends Activity {
             }
         });
 
+        Button createButton = findViewById(R.id.ClubEventCreateBtn);
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Replace this with your actual logic for the button click
+                create();
+            }
 
 
-
-
-
-
-
-
-
-
-
-
-
+        });
 
     }
 
-    private void create() {startActivity(new Intent(this, CreateEventForm.class)); finish();}
+    private void create() {startActivity(new Intent(ClubEventListActivity.this, CreateEventForm.class)); finish();}
 
     private void back() {
         startActivity(new Intent(this, ProfileActivity.class)); finish();
