@@ -44,6 +44,8 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
     ArrayList<String> courses = new ArrayList<>();
     private FirebaseAuth firebaseAuth;
 
+    String activityOrigin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +146,7 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        username = (String) document.get("username");
+                        String username = (String) document.get("username");
                         event.put("EventOwner", username);
 
                         fstore.collection("Events").document(id).set(event).addOnSuccessListener(new OnSuccessListener<Void>() {
