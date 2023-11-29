@@ -39,7 +39,7 @@ public class ToolMenuActivity extends AppCompatActivity {
         // Bind views
         usernameTextView = findViewById(R.id.usernameTextView);
         Button logOffButton = findViewById(R.id.logOffButton);
-        Button clubEventButton = findViewById(R.id.ClubEventCreateBtn);
+        Button clubEventButton = findViewById(R.id.ClubEventCreateBtnToggle);
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         // Fetch and display username

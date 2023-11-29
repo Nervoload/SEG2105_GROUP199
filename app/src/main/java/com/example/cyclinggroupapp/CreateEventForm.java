@@ -48,8 +48,8 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
 
         nameET = findViewById(R.id.eventNameEditText);
         regionET = findViewById(R.id.regionEditText);
-        submitButton = findViewById(R.id.submitButton2);
-        backButton = findViewById(R.id.backButton3);
+        submitButton = findViewById(R.id.submitButton);
+        backButton = findViewById(R.id.backButton2);
         spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
 
