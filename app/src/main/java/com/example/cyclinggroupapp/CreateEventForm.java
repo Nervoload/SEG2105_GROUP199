@@ -4,25 +4,39 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateEventForm extends Activity {
+public class CreateEventForm extends Activity implements AdapterView.OnItemSelectedListener {
     String eventType;
+    CollectionReference database;
 
     EditText nameET, regionET;
     private FirebaseFirestore fstore;
-    Button submitButton, backButton, ttBtn, rrBtn, hcBtn;
+    Button submitButton, backButton;
+    Spinner spinner;
+
+    ArrayList<String> courses = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,87 +45,61 @@ public class CreateEventForm extends Activity {
 
         nameET = findViewById(R.id.eventNameEditText);
         regionET = findViewById(R.id.regionEditText);
-        submitButton = findViewById(R.id.submitButton);
-        backButton = findViewById(R.id.backButton2);
-        rrBtn = findViewById(R.id.RoadRaceBtn);
-        ttBtn = findViewById(R.id.TimeTrialBtn);
-        hcBtn = findViewById(R.id.HillClimbBtn);
+        submitButton = findViewById(R.id.submitButton2);
+        backButton = findViewById(R.id.backButton3);
+        spinner = findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(this);
 
-        /*
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        // set simple layout resource file
+        // for each item of spinner
+
+
+        database = FirebaseFirestore.getInstance().collection("Event_Type");
+
+        database.addSnapshotListener(new EventListener<QuerySnapshot>() {
+
             @Override
-            public void onClick(View view) {
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                for(DocumentSnapshot dataSnapshot: value.getDocuments()){
 
-                // Get the entered information
-                String age = ageEditText.getText().toString();
-                String pace = paceEditText.getText().toString();
-                String level = levelEditText.getText().toString();
+                    courses.add((String) dataSnapshot.get("Name"));
 
-
-                if (eventType == null || age.equals("") || pace.equals("") || level.equals("")) {
-                    Toast.makeText(CreateEventForm.this, "choose type", Toast.LENGTH_LONG);
-                } else {
-                    Intent i = new Intent();
-                    if (eventType.equals("Time-Trail")) {
-                        i = new Intent(CreateEventForm.this, TimeTrialEventInformationPage.class);
-                    } else if (eventType.equals("Hill-Climb")) {
-                        i = new Intent(CreateEventForm.this, HillClimbEditInformationPage.class);
-                    } else if (eventType.equals("Road-Race")) {
-                        i = new Intent(CreateEventForm.this, RoadRaceEditInformationPage.class);
-                    }
-
-                    i.putExtra("age", age);
-                    i.putExtra("pace", pace);
-                    i.putExtra("level", level);
-                    i.putExtra("type", eventType);
-
-                    startActivity(i);
                 }
+
+                // Create the instance of ArrayAdapter
+                // having the list of courses
+                ArrayAdapter ad = new ArrayAdapter(CreateEventForm.this, android.R.layout.simple_spinner_item, courses);
+                // add the things to the snipper
+                ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                // Set the ArrayAdapter (ad) data on the
+                // Spinner which binds data to spinner
+                spinner.setAdapter(ad);
+
             }
         });
-         */
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(CreateEventForm.this, "Clicked", Toast.LENGTH_LONG);
                 String name = nameET.getText().toString();
                 String region = regionET.getText().toString();
                 if (eventType == null || name.equals("") || region.equals("")) {
                     Toast.makeText(CreateEventForm.this, "choose type", Toast.LENGTH_LONG);
                 } else {
+                    Toast.makeText(CreateEventForm.this, "Success", Toast.LENGTH_LONG);
                     updatedDB(name, region, eventType);
+
                 }
             }
         });
+
         backButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 back();
-            }
-        });
-
-        rrBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                eventType = "Road-Race";
-                Toast.makeText(CreateEventForm.this, "Road Race", Toast.LENGTH_LONG);
-            }
-        });
-
-        ttBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                eventType = "Time-Trail";
-                Toast.makeText(CreateEventForm.this, "Time Trail", Toast.LENGTH_LONG);
-            }
-        });
-
-        hcBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                eventType = "Hill-Climb";
-                Toast.makeText(CreateEventForm.this, "Hill Climb", Toast.LENGTH_LONG);
             }
         });
 
@@ -148,4 +136,19 @@ public class CreateEventForm extends Activity {
 
 
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        // make toastof name of course
+        // which is selected in spinner
+        Toast.makeText(CreateEventForm.this, courses.get(i), Toast.LENGTH_LONG);
+        eventType = courses.get(i);
+    }
+
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
 }

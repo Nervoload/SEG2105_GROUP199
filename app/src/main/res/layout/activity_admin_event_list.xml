@@ -22,29 +22,42 @@
         android:layout_height="wrap_content"
         android:text="Back" />
 
-    <Button
-        android:id="@+id/EventCreatebtn"
+    <LinearLayout
+        android:id="@+id/hl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/AdminEventListTitle"
-        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
 
-        android:text="Create"/>
+        <Button
+            android:id="@+id/EventCreatebtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Create Event" />
+
+        <Button
+            android:id="@+id/createEventType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Create Type" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/AdminEventListDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/EventCreatebtn"
+        android:layout_below="@id/hl"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp"
         android:paddingTop="8dp"
+        android:paddingEnd="16dp"
         android:paddingBottom="8dp"
         android:text="To edit an event, click on one of the cards"
-        android:textSize="18sp"
         android:textColor="@android:color/darker_gray"
-        android:gravity="center_vertical"
-        android:layout_gravity="center"/>
+        android:textSize="18sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eventList"
