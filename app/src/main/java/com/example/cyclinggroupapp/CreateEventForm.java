@@ -3,6 +3,7 @@ package com.example.cyclinggroupapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,9 +15,13 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,9 +41,9 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
     Button submitButton, backButton;
     Spinner spinner;
 
-    String activityOrigin;
-
     ArrayList<String> courses = new ArrayList<>();
+    private FirebaseAuth firebaseAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,23 +131,53 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
         event.put("EventName", name);
         event.put("EventRegion", region);
         event.put("EventType", type);
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String document = firebaseAuth.getCurrentUser().getUid();
+        DocumentReference docRef = db.collection("users").document(document);
 
-        fstore.collection("Events").document(id).set(event).addOnSuccessListener(new OnSuccessListener<Void>() {
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(Void unused) {
-                if (activityOrigin.equals("Club")) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String TAG= "TAG";
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        username = (String) document.get("username");
+                        event.put("EventOwner", username);
+
+                        fstore.collection("Events").document(id).set(event).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                if (activityOrigin.equals("Club")) {
                     startActivity(new Intent(CreateEventForm.this, ClubEventListActivity.class));
                     finish();
                 }
                 startActivity(new Intent(CreateEventForm.this, AdminEventListActivity.class));
-                finish();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(CreateEventForm.this, "did not work", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(CreateEventForm.this, "did not work", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+
             }
         });
+
+
+
+
 
 
 

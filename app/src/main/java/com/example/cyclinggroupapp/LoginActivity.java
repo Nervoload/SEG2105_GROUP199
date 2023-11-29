@@ -14,6 +14,7 @@ import com.example.cyclinggroupapp.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
 public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
