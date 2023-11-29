@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -54,6 +55,21 @@ public class ClubEventListActivity extends Activity {
         list = new ArrayList<>();
         myAdapter = new EventListAdapter(this, list);
         recyclerView.setAdapter(myAdapter);
+
+        ImageView rightIcon = findViewById(R.id.right_icon);
+        rightIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                View tools = findViewById(R.id.tools);
+
+                if (view.getId() == R.id.right_icon) {
+
+                    // Alternatively, if you're toggling visibility, use:
+                    tools.setVisibility(tools.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                }
+            }
+        });
 
         //To query the username of the current user
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -144,4 +160,15 @@ public class ClubEventListActivity extends Activity {
         finish();
     }
     public static final String NEXT_SCREEN = "EventDetails";
+
+    public void logOff(View view) {
+        // Log out from Firebase Auth
+        FirebaseAuth.getInstance().signOut();
+
+        // Redirect to the Login Screen
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish(); // Close the current activity
+    }
+
 }

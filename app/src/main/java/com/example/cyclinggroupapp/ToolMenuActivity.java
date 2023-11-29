@@ -41,9 +41,11 @@ public class ToolMenuActivity extends AppCompatActivity {
         Button logOffButton = findViewById(R.id.logOffButton);
         Button clubEventButton = findViewById(R.id.ClubEventCreateBtnToggle);
 
+
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         // Fetch and display username
         fetchAndDisplayUsername();
+
 
     }
 
@@ -59,5 +61,6 @@ public class ToolMenuActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }

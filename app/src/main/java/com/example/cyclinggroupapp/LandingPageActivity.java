@@ -54,7 +54,7 @@ public class LandingPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                View tools = findViewById(R.id.toolmenu);
+                View tools = findViewById(R.id.tools);
 
                 if (view.getId() == R.id.right_icon) {
 
