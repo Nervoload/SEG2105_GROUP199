@@ -69,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(new Intent(ProfileActivity.this, AdminEventListActivity.class));
                 finish();
             }
-            if (role.equals("Cycling club")) {
+            else if (role.equals("Cycling club")) {
                 startActivity(new Intent(ProfileActivity.this, ClubEventListActivity.class));
                 finish();
             } else {

@@ -46,6 +46,7 @@ public class ClubEventListActivity extends Activity {
 
                 Intent intent = new Intent(ClubEventListActivity.this, EditEventActivity.class);
                 intent.putExtra(NEXT_SCREEN,event);
+                intent.putExtra("ACTIVITY_ORIGIN", "Club");
                 //intent.putExtra("EVENT_ID", )
                 intent.putExtra("EVENT_NAME", event.EventName);
                 intent.putExtra("EVENT_REGION", event.EventRegion);
@@ -89,10 +90,19 @@ public class ClubEventListActivity extends Activity {
 
     }
 
-    private void create() {startActivity(new Intent(this, CreateEventForm.class)); finish();}
+
+    private void create() {
+        Intent intent = new Intent(ClubEventListActivity.this, CreateEventForm.class);
+        intent.putExtra("ACTIVITY_ORIGIN", "Club");
+        startActivity(intent);
+        finish();
+    }
 
     private void back() {
-        startActivity(new Intent(this, ProfileActivity.class)); finish();
+        Intent intent = new Intent(ClubEventListActivity.this, CreateEventForm.class);
+        intent.putExtra("ACTIVITY_ORIGIN", "Club");
+        startActivity(intent);
+        finish();
     }
     public static final String NEXT_SCREEN = "EventDetails";
 }

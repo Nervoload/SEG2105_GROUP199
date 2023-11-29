@@ -36,10 +36,13 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
     Button submitButton, backButton;
     Spinner spinner;
 
+    String activityOrigin;
+
     ArrayList<String> courses = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event_form);
 
@@ -55,6 +58,10 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
 
 
         database = FirebaseFirestore.getInstance().collection("Event_Type");
+        try {
+            activityOrigin = getIntent().getStringExtra("ACTIVITY_ORIGIN");
+        } catch (java.lang.NullPointerException e) {}
+
 
         database.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
@@ -123,6 +130,10 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
         fstore.collection("Events").document(id).set(event).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
+                if (activityOrigin.equals("Club")) {
+                    startActivity(new Intent(CreateEventForm.this, ClubEventListActivity.class));
+                    finish();
+                }
                 startActivity(new Intent(CreateEventForm.this, AdminEventListActivity.class));
                 finish();
             }
