@@ -125,7 +125,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "Account created\n" + email, Toast.LENGTH_SHORT).show();
                     fstore = FirebaseFirestore.getInstance();
                     userId = firebaseAuth.getCurrentUser().getUid();
-                    DocumentReference documentReference = fstore.collection("users").document(userId);
+                    DocumentReference documentReference = fstore.collection("users").document(email);
                     Map<String, Object> user = new HashMap<>();
                     user.put("username", username);
                     user.put("email", email);
