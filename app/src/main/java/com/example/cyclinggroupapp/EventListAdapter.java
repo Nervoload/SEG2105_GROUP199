@@ -23,11 +23,13 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.MyVi
 
     Context context;
     ArrayList<Event> list;
+    ArrayList<Event> eventsFull;
     private OnClickListener onClickListener;
 
     public EventListAdapter(Context context, ArrayList<Event> list) {
         this.context = context;
         this.list = list;
+        this.eventsFull = new ArrayList<>(list);
     }
 
     @NonNull
@@ -77,6 +79,32 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.MyVi
             EventType = itemView.findViewById(R.id.tvEventType);
 
         }
+    }
+    public void resetList() {
+        list.clear();
+        list.addAll(eventsFull);
+        notifyDataSetChanged();
+    }
+
+    public void filter(String text) {
+        list.clear();
+        if(text.isEmpty()){
+            list.addAll(eventsFull);
+        } else{
+            text = text.toLowerCase();
+            for(Event event : eventsFull){
+                if(event.getEventName().toLowerCase().contains(text)){
+                    list.add(event);
+                }
+                else if(event.getEventType().toLowerCase().contains(text)){
+                    list.add(event);
+                }
+                else if(event.getEventRegion().toLowerCase().contains(text)){
+                    list.add(event);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
 }

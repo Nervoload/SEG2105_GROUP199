@@ -17,12 +17,13 @@
             android:id="@+id/tools"
             android:visibility="gone"
             />
-
         <include
-            layout ="@layout/searchconfig"
-            android:id="@+id/searchlanding"
-            android:visibility="gone">
+            layout="@layout/activity_participant_event_list"
+            android:id="@+id/participantevent"
+            android:visibility="visible">
+
         </include>
+
 
 
         <LinearLayout

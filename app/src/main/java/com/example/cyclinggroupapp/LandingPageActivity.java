@@ -60,41 +60,34 @@ public class LandingPageActivity extends AppCompatActivity {
                 if (view.getId() == R.id.right_icon) {
 
                     // Alternatively, if you're toggling visibility, use:
-                   tools.setVisibility(tools.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                    tools.setVisibility(tools.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
                 }
             }
         });
-    searchIcon.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
 
-            View searchview = findViewById(R.id.searchlanding);
 
-            if (view.getId() == R.id.search_icon) {
-
-                // Alternatively, if you're toggling visibility, use:
-                searchview.setVisibility(searchview.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+        /*
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LandingPageActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                finish();
             }
-        }
-    });
+            });
+         */
 
-    backButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(LandingPageActivity.this, ProfileActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    });
+        /*
+        logOffButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logOff(view);
+            }
+        });
 
-    logOffButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            logOff();
-        }
-    });
-}
-}
+         */
+    }
+
     public void logOff(View view) {
         // Log out from Firebase Auth
         FirebaseAuth.getInstance().signOut();

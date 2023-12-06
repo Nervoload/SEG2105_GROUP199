@@ -1,6 +1,12 @@
-package com.example.grim.SEG2105_GROUP199.Clubs;
+package com.example.cyclingapp.Clubs;
+
+import com.example.cyclinggroupapp.Users.ClubOwner;
 
 public class Club {
+
+    private String clubname;
+    private String description;
+    private ClubOwner owner;
     public Club(String clubname, String description, ClubOwner owner){
 
         this.clubname = clubname;
