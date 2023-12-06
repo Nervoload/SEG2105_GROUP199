@@ -29,7 +29,16 @@ public class AdminLandingActivity extends AppCompatActivity {
         TextView title = findViewById(R.id.toolbar_title);
         Button eventTypeList = findViewById(R.id.btnEventTypeList);
         Button adminEventList = findViewById(R.id.btnAdminEventList);
+        Button accountList = findViewById(R.id.btnAccountModeration);
 
+        accountList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AdminLandingActivity.this, AccountModerationListActivity.class));
+                finish();
+
+            }
+        });
 
         eventTypeList.setOnClickListener(new View.OnClickListener() {
             @Override

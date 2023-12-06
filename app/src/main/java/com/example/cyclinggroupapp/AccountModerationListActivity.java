@@ -1,33 +1,18 @@
 package com.example.cyclinggroupapp;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cyclinggroupapp.databinding.ActivityAdminEventListBinding;
-import com.example.cyclinggroupapp.databinding.ActivityCreateEventFormBinding;
-import com.example.cyclinggroupapp.databinding.ActivityLoginBinding;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -36,25 +21,22 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class AdminEventListActivity extends Activity {
+public class AccountModerationListActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     CollectionReference database;
-    EventListAdapter myAdapter;
-    ArrayList<Event> list;
+    AccountListAdapter myAdapter;
+    ArrayList<Account> list;
 
     private View toolMenuView;
 
     private ImageView rightIcon;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_event_list);
-
+        setContentView(R.layout.activity_account_moderation_list);
         Button logOffButton = findViewById(R.id.logOffButton);
         toolMenuView = findViewById(R.id.toolmenu);
         ImageView rightIcon = findViewById(R.id.right_icon);
@@ -65,26 +47,24 @@ public class AdminEventListActivity extends Activity {
 
 
 
-        recyclerView = findViewById(R.id.eventList);
-        database = FirebaseFirestore.getInstance().collection("Events");
+        recyclerView = findViewById(R.id.AccountList);
+        database = FirebaseFirestore.getInstance().collection("users");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         list = new ArrayList<>();
-        myAdapter = new EventListAdapter(this, list);
+        myAdapter = new AccountListAdapter(this, list);
         recyclerView.setAdapter(myAdapter);
 
-        myAdapter.setOnClickListener(new EventListAdapter.OnClickListener() {
+        myAdapter.setOnClickListener(new AccountListAdapter.OnClickListener() {
             @Override
-            public void onClick(int position, Event event) {
+            public void onClick(int position, Account account) {
 
-                Intent intent = new Intent(AdminEventListActivity.this, EditEventActivity.class);
-                intent.putExtra(NEXT_SCREEN,event);
+                Intent intent = new Intent(AccountModerationListActivity.this, AccountModerationEditActivity.class);
                 //intent.putExtra("EVENT_ID", )
-                intent.putExtra("EVENT_NAME", event.EventName);
-                intent.putExtra("EVENT_REGION", event.EventRegion);
-                intent.putExtra("EVENT_TYPE", event.EventType);
-                intent.putExtra("EVENT_ID",event.EventId);
+                intent.putExtra("ACCOUNT_USERNAME", account.AccountUsername);
+                intent.putExtra("ACCOUNT_EMAIL", account.AccountEmail);
+                intent.putExtra("ACCOUNT_ROLE", account.AccountRole);
                 startActivity(intent);
             }
         });
@@ -97,30 +77,20 @@ public class AdminEventListActivity extends Activity {
                 if(error != null){}
                 else{for(DocumentSnapshot dataSnapshot: value.getDocuments()){
 
-                    Event event = new Event();
-                    event.EventName = (String) dataSnapshot.get("EventName");
-                    event.EventRegion = (String) dataSnapshot.get("EventRegion");
-                    event.EventType = (String) dataSnapshot.get("EventType");
-                    event.EventId = (String) dataSnapshot.getId();
-                    list.add(event);
+                    Account account = new Account();
+                    account.AccountEmail = (String) dataSnapshot.get("email");
+                    account.AccountRole = (String) dataSnapshot.get("role");
+                    account.AccountUsername = (String) dataSnapshot.get("username");
+                    list.add(account);
 
                 }
-                myAdapter.notifyDataSetChanged();}
+                    myAdapter.notifyDataSetChanged();}
 
             }
         });
 
 
-        Button createButton = findViewById(R.id.EventCreatebtn);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Replace this with your actual logic for the button click
-                create();
-            }
 
-
-        });
 
         /*Button createType = findViewById(R.id.createEventType);
         createType.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +125,7 @@ public class AdminEventListActivity extends Activity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AdminEventListActivity.this, AdminLandingActivity.class);
+                Intent intent = new Intent(AccountModerationListActivity.this, AdminLandingActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -170,7 +140,6 @@ public class AdminEventListActivity extends Activity {
 
     }
 
-    private void create() {startActivity(new Intent(this, CreateEventForm.class)); finish();}
 
 
     private void logOff() {

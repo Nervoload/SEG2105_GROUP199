@@ -116,16 +116,19 @@ public class AdminTypeListActivity extends AppCompatActivity {
 
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                for(DocumentSnapshot dataSnapshot: value.getDocuments()){
+                if(error != null){}
+                else {
+                    for (DocumentSnapshot dataSnapshot : value.getDocuments()) {
 
-                    EventType event = new EventType();
-                    event.EventType = (String) dataSnapshot.get("Name");
-                    event.EventDescription = (String) dataSnapshot.get("Description");
-                    list.add(event);
 
+                        EventType event = new EventType();
+                        event.EventType = (String) dataSnapshot.get("Name");
+                        event.EventDescription = (String) dataSnapshot.get("Description");
+                        list.add(event);
+
+                    }
+                    myAdapter.notifyDataSetChanged();
                 }
-                myAdapter.notifyDataSetChanged();
-
             }
         });
 

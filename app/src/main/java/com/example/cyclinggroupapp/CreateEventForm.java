@@ -135,6 +135,8 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
         event.put("EventType", type);
         ArrayList<Integer> ratings = new ArrayList<>();
         event.put("EventRatings", ratings);
+        ArrayList<String> participants = new ArrayList<>();
+        event.put("Participants", participants);
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String document = firebaseAuth.getCurrentUser().getUid();
