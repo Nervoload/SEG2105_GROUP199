@@ -96,10 +96,10 @@ public class ProfileActivity extends AppCompatActivity {
             finish();
         }
         else{
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            String document = firebaseAuth.getCurrentUser().getUid();
-            DocumentReference docRef = db.collection("users").document(document);
 
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            String document = firebaseAuth.getCurrentUser().getEmail();
+            DocumentReference docRef = db.collection("users").document(document);
 
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override

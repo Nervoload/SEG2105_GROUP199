@@ -8,6 +8,13 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <Button
+            android:id="@+id/cancelEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="BACK" />
+
         <TextView
             android:id="@+id/viewEventName"
             android:layout_width="match_parent"
@@ -39,6 +46,12 @@
             android:layout_height="wrap_content"
             android:text="No description yet" />
 
+        <TextView
+            android:id="@+id/joinedView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Not Joined yet" />
+
         <EditText
             android:id="@+id/editEventRating"
             android:layout_width="match_parent"
@@ -55,18 +68,26 @@
             android:padding="16dp">
 
             <Button
+                android:id="@+id/joinButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="join"
+                android:text="join" />
+
+            <Button
+                android:id="@+id/exitView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="exit"
+                android:text="Exit" />
+
+            <Button
                 android:id="@+id/saveEventButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:text="Rate Event" />
 
-            <Button
-                android:id="@+id/cancelEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="BACK" />
         </LinearLayout>
 
     </LinearLayout>
