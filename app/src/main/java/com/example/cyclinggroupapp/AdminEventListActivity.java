@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cyclinggroupapp.databinding.ActivityAdminEventListBinding;
 import com.example.cyclinggroupapp.databinding.ActivityCreateEventFormBinding;
 import com.example.cyclinggroupapp.databinding.ActivityLoginBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,10 +45,25 @@ public class AdminEventListActivity extends Activity {
     EventListAdapter myAdapter;
     ArrayList<Event> list;
 
+    private View toolMenuView;
+
+    private ImageView rightIcon;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_event_list);
+
+        Button logOffButton = findViewById(R.id.logOffButton);
+        toolMenuView = findViewById(R.id.toolmenu);
+        ImageView rightIcon = findViewById(R.id.right_icon);
+        TextView title = findViewById(R.id.toolbar_title);
+
+
+
+
+
 
         recyclerView = findViewById(R.id.eventList);
         database = FirebaseFirestore.getInstance().collection("Events");
@@ -103,7 +121,7 @@ public class AdminEventListActivity extends Activity {
 
         });
 
-        Button createType = findViewById(R.id.createEventType);
+        /*Button createType = findViewById(R.id.createEventType);
         createType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,23 +129,57 @@ public class AdminEventListActivity extends Activity {
             }
 
 
+        });*/
+
+        rightIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                View tools = findViewById(R.id.tools);
+
+                if (view.getId() == R.id.right_icon) {
+
+
+                    // Alternatively, if you're toggling visibility, use:
+                    tools.setVisibility(tools.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                }
+            }
         });
 
-        Button backButton = findViewById(R.id.BackToProfile);
+
+        Button backButton = findViewById(R.id.backButtonMenu);
+
         backButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                back();
+                Intent intent = new Intent(AdminEventListActivity.this, AdminLandingActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
+        logOffButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logOff();
+            }
+        });
+
 
     }
 
     private void create() {startActivity(new Intent(this, CreateEventForm.class)); finish();}
 
-    private void back() {
-        startActivity(new Intent(this, ProfileActivity.class)); finish();
+
+    private void logOff() {
+        // Log out from Firebase Auth
+        FirebaseAuth.getInstance().signOut();
+
+        // Redirect to the Login Screen
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish(); // Close the current activity
     }
+
     public static final String NEXT_SCREEN = "EventDetails";
 }

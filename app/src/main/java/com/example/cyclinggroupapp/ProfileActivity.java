@@ -66,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         binding.nextButton.setOnClickListener(view -> {
             if (role.equals("Admin")) {
-                startActivity(new Intent(ProfileActivity.this, AdminEventListActivity.class));
+                startActivity(new Intent(ProfileActivity.this, AdminLandingActivity.class));
                 finish();
             }
             else if (role.equals("Cycling club")) {
