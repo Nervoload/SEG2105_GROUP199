@@ -73,7 +73,8 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(new Intent(ProfileActivity.this, ClubEventListActivity.class));
                 finish();
             } else {
-                startActivity(new Intent(ProfileActivity.this, LandingPageActivity.class));
+                startActivity(new Intent(ProfileActivity.this, ParticipantEventListActivity.class));
+                finish();
             }
         });
 

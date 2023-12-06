@@ -34,6 +34,9 @@
             android:name=".AdminEventListActivity"
             android:exported="false" />
         <activity
+            android:name=".ParticipantEventListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
@@ -47,6 +50,9 @@
             android:exported="false" />
         <activity
             android:name=".EditEventActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewEventActivity"
             android:exported="false" />
         <activity
             android:name=".ClubEventListActivity"
@@ -63,6 +69,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CreateTypeActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
