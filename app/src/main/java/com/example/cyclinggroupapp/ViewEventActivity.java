@@ -116,7 +116,8 @@ public class ViewEventActivity extends AppCompatActivity {
 
     }
 
-    private void checkUser() {
+
+    protected void checkUser() {
 //check if user is already logged in
         //if already logged in then open profile activity
 
@@ -165,7 +166,8 @@ public class ViewEventActivity extends AppCompatActivity {
         }
     }
 
-    private void updateEventInFirestore(String eventName, String eventRegion, String eventType, int rating) {
+    protected void updateEventInFirestore(String eventName, String eventRegion, String eventType, int rating) {
+
 
         Map<String, Object> event = new HashMap<>();
         event.put("EventName", eventName);

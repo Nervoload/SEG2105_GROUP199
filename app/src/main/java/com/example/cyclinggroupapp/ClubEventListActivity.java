@@ -73,7 +73,7 @@ public class ClubEventListActivity extends Activity {
 
         //To query the username of the current user
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String document = firebaseAuth.getCurrentUser().getUid();
+        String document = firebaseAuth.getCurrentUser().getEmail();
         DocumentReference docRef = db.collection("users").document(document);
 
 

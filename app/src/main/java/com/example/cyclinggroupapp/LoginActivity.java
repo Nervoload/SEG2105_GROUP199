@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private ActivityLoginBinding binding;
+    protected ActivityLoginBinding binding;
 
     private FirebaseAuth firebaseAuth;
 
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void validateData(){
+    protected void validateData(){
         email = binding.emailET.getText().toString().trim();
         password = binding.passwordEt.getText().toString().trim();
 
