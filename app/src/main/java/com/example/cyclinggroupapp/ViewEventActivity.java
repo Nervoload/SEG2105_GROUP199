@@ -33,8 +33,8 @@ import java.util.function.BiConsumer;
 
 public class ViewEventActivity extends AppCompatActivity {
 
-    private TextView editEventName, editEventRegion, editEventType, viewEventRating, viewEventDescription, viewJoined;
-    private EditText editRating;
+    protected TextView editEventName, editEventRegion, editEventType, viewEventRating, viewEventDescription, viewJoined;
+    protected EditText editRating;
     private CollectionReference db;
     private String editEventId, username; // To store the original event name
     private String eventName,eventRegion,eventType;
@@ -101,7 +101,7 @@ public class ViewEventActivity extends AppCompatActivity {
         findViewById(R.id.saveEventButton).setOnClickListener(view -> saveEventChanges());
     }
 
-    private void saveEventChanges() {
+    protected void saveEventChanges() {
         try {
             int rating = Integer.parseInt(editRating.getText().toString());
             if (0 <= rating && rating <= 5) {
@@ -117,7 +117,7 @@ public class ViewEventActivity extends AppCompatActivity {
     }
 
 
-    protected void checkUser() {
+    protected boolean checkUser() {
 //check if user is already logged in
         //if already logged in then open profile activity
 
@@ -129,6 +129,7 @@ public class ViewEventActivity extends AppCompatActivity {
 
             startActivity(new Intent(this, LoginActivity.class));
             finish();
+            return true;
         }
         else{
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -164,6 +165,7 @@ public class ViewEventActivity extends AppCompatActivity {
 
 
         }
+        return false;
     }
 
     protected void updateEventInFirestore(String eventName, String eventRegion, String eventType, int rating) {
