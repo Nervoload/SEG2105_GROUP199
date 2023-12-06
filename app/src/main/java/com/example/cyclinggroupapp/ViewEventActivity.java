@@ -2,6 +2,7 @@ package com.example.cyclinggroupapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,12 +33,13 @@ import java.util.function.BiConsumer;
 
 public class ViewEventActivity extends AppCompatActivity {
 
-    private TextView editEventName, editEventRegion, editEventType, viewEventRating, viewEventDescription;
+    private TextView editEventName, editEventRegion, editEventType, viewEventRating, viewEventDescription, viewJoined;
     private EditText editRating;
     private CollectionReference db;
-    private String editEventId; // To store the original event name
+    private String editEventId, username; // To store the original event name
     private String eventName,eventRegion,eventType;
     private ArrayList<Long> ratings;
+    private ArrayList<String> participants;
     private FirebaseAuth firebaseAuth;
 
 
@@ -46,6 +49,8 @@ public class ViewEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_event);
 
         db = FirebaseFirestore.getInstance().collection("Events");
+        firebaseAuth = FirebaseAuth.getInstance();
+        checkUser();
 
         //setting origin of activity starting
 
@@ -54,6 +59,7 @@ public class ViewEventActivity extends AppCompatActivity {
         editEventType = findViewById(R.id.viewEventType);
         viewEventRating = findViewById(R.id.viewEventRating);
         viewEventDescription = findViewById(R.id.viewEventDescription);
+        viewJoined = findViewById(R.id.joinedView);
 
         editRating = findViewById(R.id.editEventRating);
 
@@ -67,6 +73,7 @@ public class ViewEventActivity extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 ratings = (ArrayList<Long>) value.get("EventRatings");
+                participants = (ArrayList<String>) value.get("Participants");
                 long rate = 0;
                 for (int i = 0; i < ratings.size(); i++) {
                     rate += ratings.get(i);
@@ -109,6 +116,55 @@ public class ViewEventActivity extends AppCompatActivity {
 
     }
 
+    private void checkUser() {
+//check if user is already logged in
+        //if already logged in then open profile activity
+
+        //get current user
+
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if(firebaseUser == null){
+            //not logged in
+
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+        else{
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            String document = firebaseAuth.getCurrentUser().getUid();
+            DocumentReference docRef = db.collection("users").document(document);
+
+
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    String TAG= "TAG";
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            username = (String) document.get("username");
+                            for (String i: participants) {
+                                if (i.equals(username)) {
+                                    viewJoined.setText("You are part of this event.");
+                                    break;
+                                }
+                            }
+
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+
+                }
+            });
+
+
+        }
+    }
+
     private void updateEventInFirestore(String eventName, String eventRegion, String eventType, int rating) {
 
         Map<String, Object> event = new HashMap<>();
@@ -117,12 +173,52 @@ public class ViewEventActivity extends AppCompatActivity {
         event.put("EventType", eventType);
         ratings.add((long) rating);
         event.put("EventRatings", ratings);
+        event.put("Participants", participants);
         db.document(editEventId)
                 .update(event)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     public void onSuccess(Void unused) {
-                        startActivity(new Intent(ViewEventActivity.this, ProfileActivity.class));
-                        finish();
+                        Toast.makeText(ViewEventActivity.this, "Rated event", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> Toast.makeText(ViewEventActivity.this, "Error updating event", Toast.LENGTH_SHORT).show());
+    }
+
+    private void updateEventInFirestore(String eventName, String eventRegion, String eventType, String username) {
+
+        Map<String, Object> event = new HashMap<>();
+        event.put("EventName", eventName);
+        event.put("EventRegion", eventRegion);
+        event.put("EventType", eventType);
+        event.put("EventRatings", ratings);
+        participants.add(username);
+        event.put("Participants", participants);
+        db.document(editEventId)
+                .update(event)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(ViewEventActivity.this, "Joined event", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> Toast.makeText(ViewEventActivity.this, "Error updating event", Toast.LENGTH_SHORT).show());
+    }
+
+    private void removeUsernameFromFirestore(String eventName, String eventRegion, String eventType, String username) {
+
+        Map<String, Object> event = new HashMap<>();
+        event.put("EventName", eventName);
+        event.put("EventRegion", eventRegion);
+        event.put("EventType", eventType);
+        event.put("EventRatings", ratings);
+
+        participants.remove(username);
+
+        event.put("Participants", participants);
+        db.document(editEventId)
+                .update(event)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(ViewEventActivity.this, "Exited event", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> Toast.makeText(ViewEventActivity.this, "Error updating event", Toast.LENGTH_SHORT).show());
@@ -133,5 +229,12 @@ public class ViewEventActivity extends AppCompatActivity {
         finish();
     }
 
+    public void join(View view) {
+        updateEventInFirestore(eventName, eventRegion, eventType, username);
+    }
+
+    public void exit(View view) {
+        removeUsernameFromFirestore(eventName, eventRegion, eventType, username);
+    }
 
 }
