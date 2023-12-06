@@ -42,7 +42,7 @@ public class LandingPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Button logOffButton = findViewById(R.id.logOffButton);
-
+        Button backButton = findViewById(R.id.backButtonMenu);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
@@ -64,20 +64,37 @@ public class LandingPageActivity extends AppCompatActivity {
                 }
             }
         });
-        searchIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    searchIcon.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
 
-                View searchview = findViewById(R.id.searchlanding);
+            View searchview = findViewById(R.id.searchlanding);
 
-                if (view.getId() == R.id.search_icon) {
+            if (view.getId() == R.id.search_icon) {
 
-                    // Alternatively, if you're toggling visibility, use:
-                    searchview.setVisibility(searchview.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                }
+                // Alternatively, if you're toggling visibility, use:
+                searchview.setVisibility(searchview.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
             }
-        });
-    }
+        }
+    });
+
+    backButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(LandingPageActivity.this, ProfileActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    });
+
+    logOffButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            logOff();
+        }
+    });
+}
+}
     public void logOff(View view) {
         // Log out from Firebase Auth
         FirebaseAuth.getInstance().signOut();

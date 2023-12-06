@@ -77,8 +77,9 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         //validate data
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if(!email.equals("admin") && email.equals("gccadmin") && !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             //invalid email
+
             binding.emailET.setError("Invalid email format");
 
         }
@@ -86,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
             binding.passwordEt.setError("Enter password");
 
         }
-        else if (password.length()<6){binding.emailET.setError("Password must be at least 6 characters long");}
+
         else{
             firebaseLogin();
         }

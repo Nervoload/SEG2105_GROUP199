@@ -104,14 +104,9 @@ public class SignUpActivity extends AppCompatActivity {
             binding.passwordEt.setError("Enter password");
 
         }
-        else if (password.length()<6){binding.emailET.setError("Password must be at least 6 characters long");}
 
         else if(TextUtils.isEmpty(username)){
             binding.usernameEt.setError("Enter username");
-        }
-        else if(TextUtils.isEmpty(role)){
-
-
         }
         else{
             firebaseSignUp();
