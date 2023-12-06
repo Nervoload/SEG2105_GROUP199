@@ -76,6 +76,10 @@ public class LoginActivity extends AppCompatActivity {
             firebaseGccLogin();
         }
 
+        if (email.equals("cyclingaddict") && password.equals("cyclingIsLife!")) {
+            firebaseCALogin();
+        }
+
         //validate data
         if(!email.equals("admin") && email.equals("gccadmin") && !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             //invalid email
@@ -139,6 +143,26 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword("gccadmin@admin.admin", "GCCRocks!")
+                .addOnSuccessListener(authResult -> {
+                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                    assert firebaseUser != null;
+                    String email = firebaseUser.getEmail();
+                    Toast.makeText(LoginActivity.this, "Logged in \n" + email, Toast.LENGTH_SHORT).show();
+
+                    startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+                    finish();
+                }).addOnFailureListener(e -> {
+                    //login failed
+                    progressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void firebaseCALogin() {
+        //show progress
+        progressDialog.show();
+
+        firebaseAuth.signInWithEmailAndPassword("cyclingaddict@gmail.com", "cyclingIsLife!")
                 .addOnSuccessListener(authResult -> {
                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                     assert firebaseUser != null;
