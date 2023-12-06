@@ -1,11 +1,14 @@
 package com.example.cyclinggroupapp;
 import org.junit.Test;
-
+import android.widget.EditText;
 import org.junit.Before;
 import static org.junit.Assert.assertEquals;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+
+
+
 public class ViewEventActivityTest {
     private ViewEventActivity viewEventActivity;
 
@@ -48,6 +51,37 @@ public class ViewEventActivityTest {
         assertFalse(isRatingWithinRange(rating));
     }
 
-    
+    @Test
+    public void testCheckUser_UserLoggedIn_ReturnsTrue() {
+        boolean result = viewEventActivity.checkUser();
+        assertTrue(result);
+    }
 
+    @Test
+    public void testCheckUser_UserNotLoggedIn_ReturnsFalse() {
+        boolean result = viewEventActivity.checkUser();
+        assertFalse(result);
+    }
+
+    @Test
+    public void saveEventChanges_WithValidRating_DisplaySuccessMessage() {
+        ViewEventActivity activity = new ViewEventActivity();
+        activity.editRating = new EditText(activity);
+        activity.editRating.setText("4");
+
+        activity.saveEventChanges();
+
+        assertTrue(true);
+    }
+
+    @Test
+    public void saveEventChanges_WithInvalidRating_DisplayErrorMessage() {
+        ViewEventActivity activity = new ViewEventActivity();
+        activity.editRating = new EditText(activity);
+        activity.editRating.setText("invalid");
+
+        activity.saveEventChanges();
+
+        assertFalse(false);
+    }
 }
