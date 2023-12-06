@@ -109,7 +109,7 @@ public class ViewEventActivity extends AppCompatActivity {
 
     }
 
-    private void updateEventInFirestore(String eventName, String eventRegion, String eventType, int rating) {
+    protected void updateEventInFirestore(String eventName, String eventRegion, String eventType, int rating) {
 
         Map<String, Object> event = new HashMap<>();
         event.put("EventName", eventName);
