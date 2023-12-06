@@ -122,7 +122,6 @@ public class EditEventActivity extends AppCompatActivity {
     }
 
     private void deleteEventDB(){
-        if (activityOrigin.equals("Club")){
             db.document(editEventId).delete()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         public void onSuccess(Void unused) {
@@ -131,24 +130,9 @@ public class EditEventActivity extends AppCompatActivity {
                         }
                     })
                     .addOnFailureListener(e -> Toast.makeText(EditEventActivity.this, "Error Deleting Event", Toast.LENGTH_SHORT).show());
-
-        }else{
-        db.document(editEventId).delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    public void onSuccess(Void unused) {
-                        startActivity(new Intent(EditEventActivity.this, AdminEventListActivity.class));
-                        finish();
-                    }
-                })
-                .addOnFailureListener(e -> Toast.makeText(EditEventActivity.this, "Error Deleting Event", Toast.LENGTH_SHORT).show());
-        }
     }
     private void cancelEditPage() {
-        if (activityOrigin.equals("Club")) {
-            startActivity(new Intent(this, ClubEventListActivity.class));
-        } else {
-            startActivity(new Intent(this, AdminEventListActivity.class));
-        }
+        startActivity(new Intent(this, AdminEventListActivity.class));
         finish();
     }
 
