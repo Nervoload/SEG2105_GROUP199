@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.MyViewHolder> {
 
@@ -76,11 +77,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.MyVi
             EventType = itemView.findViewById(R.id.tvEventType);
 
         }
-
-
-
     }
-
-
 
 }

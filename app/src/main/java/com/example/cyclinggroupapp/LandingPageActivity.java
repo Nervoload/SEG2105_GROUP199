@@ -48,6 +48,7 @@ public class LandingPageActivity extends AppCompatActivity {
 
         toolMenuView = findViewById(R.id.toolmenu);
         ImageView rightIcon = findViewById(R.id.right_icon);
+        ImageView searchIcon = findViewById(R.id.search_icon);
         TextView title = findViewById(R.id.toolbar_title);
 
         rightIcon.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +61,19 @@ public class LandingPageActivity extends AppCompatActivity {
 
                     // Alternatively, if you're toggling visibility, use:
                    tools.setVisibility(tools.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                }
+            }
+        });
+        searchIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                View searchview = findViewById(R.id.searchlanding);
+
+                if (view.getId() == R.id.search_icon) {
+
+                    // Alternatively, if you're toggling visibility, use:
+                    searchview.setVisibility(searchview.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
                 }
             }
         });
