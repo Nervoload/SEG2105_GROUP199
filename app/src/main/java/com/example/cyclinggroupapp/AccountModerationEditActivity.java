@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -158,8 +159,11 @@ public class AccountModerationEditActivity extends AppCompatActivity {
 
 
 
-        // Proceed with updating the event
-        EditDB(newUsername, newEmail, newRole);
+        if (Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()) {
+            EditDB(newUsername, newEmail, newRole);
+        } else {
+            Toast.makeText(this, "Invalid email", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void EditDB(String name, String email, String role) {

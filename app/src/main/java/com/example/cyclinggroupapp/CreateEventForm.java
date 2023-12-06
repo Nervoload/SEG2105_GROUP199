@@ -109,6 +109,7 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
             }
         });
 
+
         backButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -157,11 +158,8 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
                             @Override
                             public void onSuccess(Void unused) {
 
-                    startActivity(new Intent(CreateEventForm.this, ClubEventListActivity.class));
+                    startActivity(new Intent(CreateEventForm.this, ProfileActivity.class));
                     finish();
-
-                startActivity(new Intent(CreateEventForm.this, AdminEventListActivity.class));
-                                finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
