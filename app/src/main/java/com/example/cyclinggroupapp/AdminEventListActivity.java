@@ -94,7 +94,8 @@ public class AdminEventListActivity extends Activity {
 
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                for(DocumentSnapshot dataSnapshot: value.getDocuments()){
+                if(error != null){}
+                else{for(DocumentSnapshot dataSnapshot: value.getDocuments()){
 
                     Event event = new Event();
                     event.EventName = (String) dataSnapshot.get("EventName");
@@ -104,7 +105,7 @@ public class AdminEventListActivity extends Activity {
                     list.add(event);
 
                 }
-                myAdapter.notifyDataSetChanged();
+                myAdapter.notifyDataSetChanged();}
 
             }
         });
@@ -145,6 +146,7 @@ public class AdminEventListActivity extends Activity {
                 }
             }
         });
+
 
 
         Button backButton = findViewById(R.id.backButtonMenu);
