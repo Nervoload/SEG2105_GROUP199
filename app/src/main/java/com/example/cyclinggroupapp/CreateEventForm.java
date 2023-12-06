@@ -133,6 +133,8 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
         event.put("EventName", name);
         event.put("EventRegion", region);
         event.put("EventType", type);
+        ArrayList<Integer> ratings = new ArrayList<>();
+        event.put("EventRatings", ratings);
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String document = firebaseAuth.getCurrentUser().getUid();
@@ -152,10 +154,10 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
                         fstore.collection("Events").document(id).set(event).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                if (activityOrigin.equals("Club")) {
+
                     startActivity(new Intent(CreateEventForm.this, ClubEventListActivity.class));
                     finish();
-                }
+
                 startActivity(new Intent(CreateEventForm.this, AdminEventListActivity.class));
                                 finish();
                             }

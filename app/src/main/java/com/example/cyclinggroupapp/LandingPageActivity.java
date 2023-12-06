@@ -42,7 +42,7 @@ public class LandingPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Button logOffButton = findViewById(R.id.logOffButton);
-
+        Button backButton = findViewById(R.id.backButtonMenu);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
@@ -63,8 +63,24 @@ public class LandingPageActivity extends AppCompatActivity {
                 }
             }
         });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LandingPageActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        logOffButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logOff();
+            }
+        });
     }
-    public void logOff(View view) {
+    public void logOff() {
         // Log out from Firebase Auth
         FirebaseAuth.getInstance().signOut();
 
