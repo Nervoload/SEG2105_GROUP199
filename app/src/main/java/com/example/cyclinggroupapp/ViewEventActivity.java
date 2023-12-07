@@ -52,8 +52,6 @@ public class ViewEventActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         checkUser();
 
-        //setting origin of activity starting
-
         editEventName = findViewById(R.id.viewEventName);
         editEventRegion = findViewById(R.id.viewEventRegion);
         editEventType = findViewById(R.id.viewEventType);
@@ -117,7 +115,7 @@ public class ViewEventActivity extends AppCompatActivity {
     }
 
 
-    protected boolean checkUser() {
+    protected void checkUser() {
 //check if user is already logged in
         //if already logged in then open profile activity
 
@@ -129,11 +127,10 @@ public class ViewEventActivity extends AppCompatActivity {
 
             startActivity(new Intent(this, LoginActivity.class));
             finish();
-            return true;
         }
         else{
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            String document = firebaseAuth.getCurrentUser().getUid();
+            String document = firebaseAuth.getCurrentUser().getEmail();
             DocumentReference docRef = db.collection("users").document(document);
 
 
@@ -165,7 +162,6 @@ public class ViewEventActivity extends AppCompatActivity {
 
 
         }
-        return false;
     }
 
     protected void updateEventInFirestore(String eventName, String eventRegion, String eventType, int rating) {
