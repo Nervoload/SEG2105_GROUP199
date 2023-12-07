@@ -145,7 +145,7 @@ public class ClubEventListActivity extends Activity {
 
         });
 
-        
+
     }
 
     private void create() {

@@ -63,7 +63,7 @@ public class ProfileInfo extends AppCompatActivity {
         else {
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            String document = firebaseAuth.getCurrentUser().getUid();
+            String document = firebaseAuth.getCurrentUser().getEmail();
             DocumentReference docRef = db.collection("users").document(document);
 
 
@@ -145,7 +145,7 @@ public class ProfileInfo extends AppCompatActivity {
             event.put("Phone", phoneField.getText().toString());
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            String document = firebaseAuth.getCurrentUser().getUid();
+            String document = firebaseAuth.getCurrentUser().getEmail();
             DocumentReference docRef = db.collection("users").document(document);
 
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
