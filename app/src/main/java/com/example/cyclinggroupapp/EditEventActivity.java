@@ -150,7 +150,8 @@ public class EditEventActivity extends AppCompatActivity implements AdapterView.
             db.document(editEventId).delete()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         public void onSuccess(Void unused) {
-                            startActivity(new Intent(EditEventActivity.this, ClubEventListActivity.class));
+
+                            startActivity(new Intent(EditEventActivity.this, ProfileActivity.class));
                             finish();
                         }
                     })

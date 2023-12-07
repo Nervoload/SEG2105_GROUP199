@@ -46,15 +46,6 @@
                     android:layout_marginTop="3dp"
                     android:text="CREATE EVENT" />
 
-                <Button
-                    android:id="@+id/CreateEditClubInfoBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/ClubEventListTitle"
-                    android:layout_marginStart="41dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_toEndOf="@id/ClubEventCreateBtn"
-                    android:text="Create/Edit Club Information" />
 
                 <TextView
                     android:id="@+id/ClubEventListDescription"
