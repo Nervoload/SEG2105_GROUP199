@@ -3,6 +3,7 @@ package com.example.cyclinggroupapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -53,20 +55,23 @@ public class ParticipantEventListActivity extends Activity{
 
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                for (DocumentSnapshot dataSnapshot : value.getDocuments()) {
+                if(error != null){}
+                else {
+                    for (DocumentSnapshot dataSnapshot : value.getDocuments()) {
 
-                    Event event = new Event();
-                    event.EventName = (String) dataSnapshot.get("EventName");
-                    event.EventRegion = (String) dataSnapshot.get("EventRegion");
-                    event.EventType = (String) dataSnapshot.get("EventType");
-                    event.EventId = (String) dataSnapshot.getId();
-                    list.add(event);
+                        Event event = new Event();
+                        event.EventName = (String) dataSnapshot.get("EventName");
+                        event.EventRegion = (String) dataSnapshot.get("EventRegion");
+                        event.EventType = (String) dataSnapshot.get("EventType");
+                        event.EventId = (String) dataSnapshot.getId();
+                        list.add(event);
 
-                    myAdapter.eventsFull.clear(); // Clear and update eventsFull
-                    myAdapter.eventsFull.addAll(list);
+                        myAdapter.eventsFull.clear(); // Clear and update eventsFull
+                        myAdapter.eventsFull.addAll(list);
 
+                    }
+                    myAdapter.notifyDataSetChanged();
                 }
-                myAdapter.notifyDataSetChanged();
 
             }
         });
@@ -120,10 +125,40 @@ public class ParticipantEventListActivity extends Activity{
             }
 
         });
+
+        Button backButton = findViewById(R.id.backButtonMenu);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ParticipantEventListActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        Button logOffButton = findViewById(R.id.logOffButton);
+        logOffButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logOff();
+            }
+        });
+
         myAdapter.resetList();
     }
 
     private void create() {startActivity(new Intent(this, CreateEventForm.class)); finish();}
+
+    private void logOff() {
+        // Log out from Firebase Auth
+        FirebaseAuth.getInstance().signOut();
+
+        // Redirect to the Login Screen
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish(); // Close the current activity
+    }
 
     public static final String NEXT_SCREEN = "EventDetails";
 }
