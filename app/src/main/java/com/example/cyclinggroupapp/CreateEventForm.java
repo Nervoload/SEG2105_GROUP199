@@ -140,7 +140,7 @@ public class CreateEventForm extends Activity implements AdapterView.OnItemSelec
         event.put("Participants", participants);
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String document = firebaseAuth.getCurrentUser().getUid();
+        String document = firebaseAuth.getCurrentUser().getEmail();
         DocumentReference docRef = db.collection("users").document(document);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
